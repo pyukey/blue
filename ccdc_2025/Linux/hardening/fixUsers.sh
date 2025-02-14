@@ -19,6 +19,7 @@ fixUser() {
   case "$2" in
     U) if query "$1" "unkown user" "lock account"; then
         usermod -L "$1"
+        chage -E 1 "$1"
        else
         :
        fi;;
@@ -36,7 +37,7 @@ fixUser() {
 
     S) if query "$1" "in sudoers file" "remove user from /etc/sudoers"; then
         for n in $(grep -n -v "#" /etc/sudoers | grep "$1" | awk '{print $1}'); do
-         sed -i '$nd' /etc/sudoers
+          sed -i '$nd' /etc/sudoers
         done
        else
         :
@@ -46,14 +47,23 @@ fixUser() {
        else
         :
        fi;;
-    N) if query "$1" "can authenticate without a password" "set shell to /bin/false"; then
-        usermod -s "/bin/false" "$1"
+    N) if query "$1" "can authenticate without a password" "add x to /etc/passwd"; then
+         pass=$(grep "^$1:" /etc/passwd | awk -F: '{print $2}')
+         sed "s/$1:$pass:/$1:x:/" /etc/passwd
        else
         :
        fi;;
-    C) echo "Can't do that";;
-    H) echo "Can't do that";;
-    K) if query "$1" "has authorized_keys SSH" "disable the keys"; then
+    C) if query "$1" "an active connection" "kill the connection"; then
+         echo "Do it yourself!"
+       else
+        :
+       fi;;
+    H) if query "$1" "home directory" "nuke the directory"; then
+        rm -rf "/home/$1"
+       else
+        :
+       fi;;
+    K) if query "$1" "authorized_keys SSH" "disable the keys"; then
         mv "/home/$1/.ssh/authorized_keys" "/home/$1/.ssh/author1zed_keys"
        else
         :
