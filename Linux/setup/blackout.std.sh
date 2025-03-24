@@ -12,6 +12,7 @@ undo() {
   iptables -D INPUT $num
   num=$(iptables -L OUTPUT --line-numbers | tail -1 | awk '{print $1}')
   iptables -D OUTPUT $num
+  printf "\n\033[01m\033[33mBlackout Over!\033[00m\n"
 }
 block(){
   iptables -A INPUT -j DROP
@@ -21,20 +22,27 @@ block(){
 iptables -A INPUT -i lo -j ACCEPT
 iptables -A OUTPUT -o lo -j ACCEPT
 
-for ip in $(ss | tail -5 | grep ssh | awk '{print $6}' | awk -F: '{print $1}')
-do iptables -A INPUT -s "$ip" -p tcp --dport 22 -j ACCEPT
-iptables -A OUTPUT -d "$ip" -p tcp --sport 22 -j ACCEPT
+ips=$(ss | grep ssh | awk '{print $6}' | awk -F: '{print $1}')
+echo "SSH connections from: $ips"
+
+for ip in $ips
+do echo "Allow $ip? [y|n]"
+read ans
+case $ans in
+  y) iptables -A INPUT -s "$ip" -p tcp --dport 22 -j ACCEPT; iptables -A OUTPUT -d "$ip" -p tcp --sport 22 -j ACCEPT;;
+  n) :;;
+esac
 done
 
 #DON'T TOUCH
-undo 10 &
+undo 3 &
 block
 
 echo "Say something if you are still connected:"
 read connected
 
-sleep 5
-undo 300 &
+sleep 3
+undo 60 &
 block
 
-echo "You have 5 minutes to harden your system. Please do not mess with firewall rules!"
+echo "You have 1 minute to harden your system!"
