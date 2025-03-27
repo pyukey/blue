@@ -5,7 +5,7 @@
     <meta name="viewport"
     content="width=device-width, initial-scale=1.0">
     <title>Funmap</title>
-
+ 
     <link rel="stylesheet" href="styles.css" type="text/css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +27,7 @@
                 <div id="autocomplete-list" class="autocomplete-list"></div>
             </div>
         </form>
-        
+ 
     </header>
     <main>
         <div class="bulk">
@@ -45,14 +45,14 @@
             </div>
         </div>
     </main>
-
+ 
     <!-- handle clicks -->
     <script>
         var arrow1 = document.getElementById('arrow1');
-
+ 
         arrow1.addEventListener('click', function() {toggleIcon(arrow1);});
     </script>
-
+ 
     <!-- visualizer -->
     <script>
         var la = cytoscape({
@@ -61,20 +61,17 @@
                 {
                     selector: 'node',
                     style: {
-                        shape: 'circle',
-                        'background-color': 'blue',
-                        label: 'data(id)',
-                        'text-valign': 'center',
+                        shape: 'rectangle',
+                        'background-color': 'white',
+                        'background-image': 'data(image)',
+                        'background-fit': 'cover',
+                        'background-clip': 'none',
+                        label: 'data(label)',
+                        'text-valign': 'bottom',
+                        'text-halign': 'center',
                         'color': '#FF9900',
-                        'font-size': 8
-                    }
-                },
-                {
-                    selector: '#a',
-                    style: {
-                        'background-color': '#FF9900',
-                        label: 'router',
-                        'color': 'blue'
+                        'font-size': 8,
+                        'text-wrap': 'wrap'
                     }
                 }
             ],
