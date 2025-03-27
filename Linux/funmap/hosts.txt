@@ -1,0 +1,6 @@
+10.13.37.1 Windows ssh,http
+10.13.37.4 Debian ssh
+10.13.37.6 Windows mrpc
+10.13.37.10 BSD  ssh
+10.13.37.61 Ubunutu ssh
+10.13.37.240 Kali ssh

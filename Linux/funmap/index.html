@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+    <title>Funmap</title>
+
+    <link rel="stylesheet" href="styles.css" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/cytoscape/2.7.10/cytoscape.js'></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img id="pog" src="gfx/pogchamp-twitch-own3d.png">
+        </div>
+        <form>
+            <div class="search">
+                <span class="search-icon material-symbols-outlined">search</span>
+                <input class="search-input" type="search" placeholder="Search">
+                <div id="autocomplete-list" class="autocomplete-list"></div>
+            </div>
+        </form>
+        
+    </header>
+    <main>
+        <div class="bulk">
+            <div class="graph" id="network"></div>
+            <div class="info-box right smol" id="repo">
+                <span class="material-symbols-outlined arrow" id = 'arrow1'>
+                    keyboard_arrow_down
+                    </span>
+                <h1 id="reponame"><u>Qutee.jl</u></h1>
+                <p id="repodes">This is dummy text for description/README.md placeholder.</p>
+                <ul id="repolang"> <h3>Langauges used:</h3>
+                    <li><b>69%</b> L1</li>
+                    <li><b>42%</b> L2</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- handle clicks -->
+    <script>
+        var arrow1 = document.getElementById('arrow1');
+
+        arrow1.addEventListener('click', function() {toggleIcon(arrow1);});
+    </script>
+
+    <!-- visualizer -->
+    <script>
+        var net = cytoscape({
+            container: document.getElementById('network'),
+            style : [
+                {
+                    selector: 'node',
+                    style: {
+                        shape: 'circle',
+                        'background-color': 'blue',
+                        label: 'data(id)',
+                        'text-valign': 'center',
+                        'color': '#FF9900',
+                        'font-size': 8
+                    }
+                },
+                {
+                    selector: '#a',
+                    style: {
+                        'background-color': '#FF9900',
+                        label: 'router',
+                        'color': 'blue'
+                    }
+                }
+            ],
+            layout: {
+                name: 'concentric'
+            },
+            elements: [
+                { data: { id: 'a' } },
+                { data: { id: '0' } },
+                { data: { id: '1' } },
+                { data: { id: '2' } },
+                { data: { id: '3' } },
+                { data: { id: '4' } },
+                { data: { id: '5' } },
+                { data: { id: '6' } },
+                { data: { id: '7' } },
+                { data: { id: '8' } },
+                { data: { id: '9' } },
+                {
+                    data: {
+                        id: 'a0',
+                        source: 'a',
+                        target: '0',
+                    }
+                },
+                {
+                    data: {
+                        id: 'a1',
+                        source: 'a',
+                        target: '1',
+                    }
+                },
+                {
+                    data: {
+                        id: 'a2',
+                        source: 'a',
+                        target: '2',
+                    }
+                },
+                {
+                    data: {
+                        id: 'a3',
+                        source: 'a',
+                        target: '3',
+                    }
+                },
+                {
+                    data: {
+                        id: 'a4',
+                        source: 'a',
+                        target: '4',
+                    }
+                },
+                {
+                    data: {
+                        id: 'a5',
+                        source: 'a',
+                        target: '5',
+                    }
+                },
+                {
+                    data: {
+                        id: 'a6',
+                        source: 'a',
+                        target: '6',
+                    }
+                },
+                {
+                    data: {
+                        id: 'a7',
+                        source: 'a',
+                        target: '7',
+                    }
+                },
+                {
+                    data: {
+                        id: 'a8',
+                        source: 'a',
+                        target: '8',
+                    }
+                },
+                {
+                    data: {
+                        id: 'a9',
+                        source: 'a',
+                        target: '9',
+                    }
+                }]
+        });
+    </script>
+
+</body>
+</html>
