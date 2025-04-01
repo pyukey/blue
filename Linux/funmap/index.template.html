@@ -69,13 +69,29 @@
                         label: 'data(label)',
                         'text-valign': 'bottom',
                         'text-halign': 'center',
-                        'color': '#FF9900',
-                        'font-size': 8,
-                        'text-wrap': 'wrap'
+                        'color': '#000000',
+                        'text-wrap': 'wrap',
+			'text-background-color': 'white',
+			'text-background-opacity': 1,
+                        'font-size': 2,
                     }
-                }
+                },
+		{
+		    selector: '.router',
+		    style: {
+			'font-size': 3,
+			'width': 18,
+			'height': 18
+		    }
+		},
+		{
+		    selector: 'edge',
+		    style: {
+			'width': 1
+		    }
+		}
             ],
             layout: {
-                name: 'concentric'
+                name: 'preset'
             },
             elements: [

@@ -33,19 +33,43 @@ done < subnets
 # Reformat hosts.txt to be IP, hostname, distro, services
 
 cat ../index.template.html > ../index.html
+ybase=0
 while read -r sub; do
   subStart=${sub%%/*}
   cd "$subStart"
   router=$(head -1 hosts.txt | awk '{print $1}')
+  fac=1
+  xbase=8
+  ycur=$ybase
+
+  if [ wc -l < hosts.txt -eq 1 ]; then
+    ybase=$($ybase+50)
+  fi
+
+  count=0
+
   while read -r ip hostname distro services ; do
-    echo "{ data: { id: \"$ip\", label: \"$ip\n$hostname\", image: \"$distro.png\" } }," >> ../../index.html
     if [ "$ip" = "$router" ]; then
-      :
+      echo "{ data: { id: \"$ip\", label: \"$ip\n$hostname\", image: \"$distro.png\" }, classes: \"router\", position: { x: 50, y: \"$($ycur+25)\" } }," >> ../../index.html
     else
+      xnow=$($fac * $xbase + 54)
+      if [ $fac -eq 1 ]; then
+	fac=-1
+      else
+	fac=1
+	xbase=$($xbase + 16)
+      fi
+      echo "{ data: { id: \"$ip\", label: \"$ip\n$hostname\", image: \"$distro.png\" } }," >> ../../index.html
       echo "{ data: { id: \"connect.$ip\", source: \"$router\", target: \"$ip\" } }," >> ../../index.html
+      count=$($count+1)
+      if [ $count -eq 8 ]; then
+	count=0
+	ybase=($ybase+50)
+      fi
     fi
   done < hosts.txt
   cd ..
+  ybase=$($ybase+10)
 done < subnets
 cd ..
 echo "]});" >> index.html
